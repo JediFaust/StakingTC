@@ -25,12 +25,12 @@
 
 
 ## ⛓️ Deployed Addresses at BSC Testnet:<a name = "addresses"></a>
-- JediToken to stake: 0x5aeCAA37aA76CC3a6aa336C57ee8e6e9c04eBa27
- link: https://testnet.bscscan.com/address/0x5aeCAA37aA76CC3a6aa336C57ee8e6e9c04eBa27#code
-- StakingTC: 0x7B067e5db9F6eA17ff26dd64B10e68C01a2d8e54
- link: https://testnet.bscscan.com/address/0x7B067e5db9F6eA17ff26dd64B10e68C01a2d8e54#code
-- Power Token reward: 0xda8678F17b25445eCC2Afae06549d07dBD9D65e4
- link: https://testnet.bscscan.com/address/0xda8678F17b25445eCC2Afae06549d07dBD9D65e4#code
+- JediToken to stake: 0x69D106f3F0587deD3d96EA52AAC104E4708e1e63
+ link: https://testnet.bscscan.com/address/0x69D106f3F0587deD3d96EA52AAC104E4708e1e63#code
+- StakingTC: 0x14279A1D7A1Cc396aE0bd84A640E1b2E6C894714
+ link: https://testnet.bscscan.com/address/0x14279A1D7A1Cc396aE0bd84A640E1b2E6C894714#code
+- Power Token reward: 0xD1389C41dCCdC7AB1406fea216cAAB0846BfF645
+ link: https://testnet.bscscan.com/address/0xD1389C41dCCdC7AB1406fea216cAAB0846BfF645#code
 
 
 (c) JediFaust
