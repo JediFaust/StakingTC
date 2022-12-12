@@ -209,6 +209,8 @@ contract StakingTC {
         Staker storage s = _stakers[msg.sender];
         require(s.amount == 0, 'Staking: Already staked!');
 
+        token.transferFrom(msg.sender, address(this), amount_);
+
         s.amount = amount_;
         s.claimedTime = block.timestamp;
         s.unlockTime = block.timestamp + minLockTime;
@@ -235,8 +237,8 @@ contract StakingTC {
     function _claim(address to_) internal {
         Staker storage s = _stakers[to_];
             uint reward =
-                ((s.claimedTime - block.timestamp)
-                * (s.amount * rewardPercent) / 1000
+                ((block.timestamp - s.claimedTime)
+                * ((s.amount * rewardPercent) / 1000)
                 ) / rewardRate;
             
             if(reward > 0) {
