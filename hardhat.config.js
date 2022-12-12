@@ -12,5 +12,11 @@ module.exports = {
         mnemonic: process.env.MNEMONIC
       }
     },
+    etherscan: {
+      url: process.env.BINANCE_TESTNET_URL,
+      apiKey: {
+        bscTestnet: process.env.BSCSCAN_API_TOKEN
+      }
+    },
   }
 };
