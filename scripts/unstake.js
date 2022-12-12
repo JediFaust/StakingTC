@@ -472,16 +472,17 @@ async function main() {
     const jediConnection = jediContract.connect(wallet);
     const powerConnection = powerContract.connect(wallet);
 
-    const amountToStake = ethers.utils.parseEther("100");
+    const txUnstake = await stakingConnection.unstake({ gasLimit: 100000 });
+    await txUnstake.wait();
+    console.log("Unstake: ", txUnstake);
+1
+    const txBalance = await powerConnection.balanceOf("0xea3590c16987794831c12783E05aeD2e85319EF2");
+    await txBalance.wait();
+    console.log("Power Balance: " + txBalance);
 
-    const txApprove = await jediConnection.approve(StakingAddr, amountToStake);
-    await txApprove.wait();
-    console.log("Approve: ", txApprove);
-
-    const txStake = await stakingConnection.stake(amountToStake);
-    await txStake.wait();
-    console.log("Stake: ", txStake);
+    const txBalanceJDT = await jediConnection.balanceOf("0xea3590c16987794831c12783E05aeD2e85319EF2");
+    await txBalanceJDT.wait();
+    console.log("Jedi Balance: " + txBalanceJDT);
 }
 
 main();
-
