@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 interface IERC20 {
-    function transferFrom(address from_, address to_, uint256 amount_) external;
+    function transferFrom(address from_, address to_, uint256 amount_) external returns(bool);
 }
 
 /**
@@ -18,7 +18,7 @@ contract ERC20Reward {
     mapping(address => uint256) private balances;
     mapping(address => mapping(address => uint256)) private allowances;
 
-    event Transfer(address indexed from, address to, uint256 amount);
+    event Transfer(address indexed from, address indexed to, uint256 amount);
     event Approval(address indexed owner, address indexed to, uint256 amount);
 
     constructor(
@@ -209,7 +209,9 @@ contract StakingTC {
         Staker storage s = _stakers[msg.sender];
         require(s.amount == 0, 'Staking: Already staked!');
 
-        token.transferFrom(msg.sender, address(this), amount_);
+        require(
+            token.transferFrom(msg.sender, address(this), amount_),
+            'Staking: Transfer fail!');
 
         s.amount = amount_;
         s.claimedTime = block.timestamp;
@@ -238,12 +240,12 @@ contract StakingTC {
         Staker storage s = _stakers[to_];
             uint reward =
                 ((block.timestamp - s.claimedTime)
-                * ((s.amount * rewardPercent) / 1000)
+                * s.amount * rewardPercent / 1000
                 ) / rewardRate;
             
             if(reward > 0) {
-                rewardToken.mint(to_, reward);
                 s.claimedTime = block.timestamp;
+                rewardToken.mint(to_, reward);
             }
     }
 
@@ -255,13 +257,17 @@ contract StakingTC {
     function unstake() external {
         Staker storage s = _stakers[msg.sender];
         require(s.unlockTime <= block.timestamp, 'Staking: Lock time not expired');
+        uint amount = s.amount;
 
         if(s.claimedTime + rewardRate >= block.timestamp) {
             _claim(msg.sender);
         }
 
-        require(s.amount > 0, 'Staking: Not staked!');
-        token.transferFrom(address(this), msg.sender, s.amount);
         s.amount = 0;
+
+        require(amount > 0, 'Staking: Not staked!');
+        require(
+            token.transferFrom(address(this), msg.sender, amount),
+            'Staking: Transfer fail!');
     }
 }
